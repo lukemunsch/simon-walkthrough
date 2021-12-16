@@ -12,8 +12,7 @@ const {
     playerTurn
 } = require("../game");
 
-jest.spyOn(window, "alert").mockImplementation(() => { })
-
+jest.spyOn(window, "alert").mockImplementation(() => {});
 
 beforeAll(() => {
     let fs = require("fs");
@@ -21,6 +20,14 @@ beforeAll(() => {
     document.open();
     document.write(fileContents);
     document.close();
+});
+
+describe("pre-game", () => {
+    test("clicking buttons before newGame should fail", () => {
+        game.lastButton = "";
+        document.getElementById("button2").click();
+        expect(game.lastButton).toEqual("");
+    });
 });
 
 describe("game object contains correct keys", () => {
@@ -44,40 +51,39 @@ describe("game object contains correct keys", () => {
     });
 });
 
-describe("new game function works correctly", () => {
+describe("newGame works correctly", () => {
     beforeAll(() => {
         game.score = 42;
-        game.currentGame = ["button1", "button2"];
         game.playerMoves = ["button1", "button2"];
+        game.currentGame = ["button1", "button2"];
         document.getElementById("score").innerText = "42";
         newGame();
-        showScore();
     });
-    test("game score should be set to 0", () => {
+    test("expect data-listener to be true", () => {
+        const elements = document.getElementsByClassName("circle");
+        for (let element of elements) {
+            expect(element.getAttribute("data-listener")).toEqual("true");
+        }
+    });
+    test("should set game score to zero", () => {
         expect(game.score).toEqual(0);
     });
-    test("should be one move in the current Game array", () => {
-        expect(game.currentGame.length).toEqual(1);
+    test("should display 0 for the element with id of score", () => {
+        expect(document.getElementById("score").innerText).toEqual(0);
     });
-    test("game player moves array should be empty", () => {
-        expect(game.playerMoves.length).toEqual(0);
+    test("should clear the player moves array", () => {
+        expect(game.playerMoves.length).toBe(0);
     });
-    test("score showing in html should reset to 0", () => {
-        expect(document.getElementById("score").innerText).toEqual(0)
-    })
-    test("expect data-listener to be true", () => {
-        const elems = document.getElementsByClassName("circle");
-        for (el of elems) {
-            expect(el.getAttribute("data-listener")).toEqual("true");
-        }
-    })
+    test("should add one move to the computer's game array", () => {
+        expect(game.currentGame.length).toBe(1);
+    });
 });
 
 describe("gameplay works correctly", () => {
     beforeEach(() => {
         game.score = 0;
         game.currentGame = [];
-        game.playerMoveS = [];
+        game.playerMoves = [];
         addTurn();
     });
     afterEach(() => {
@@ -85,12 +91,12 @@ describe("gameplay works correctly", () => {
         game.currentGame = [];
         game.playerMoves = [];
     });
-    test("addTurn adds new turn to game", () => {
+    test("addTurn adds a new turn to the game", () => {
         addTurn();
         expect(game.currentGame.length).toBe(2);
     });
-    test("correct class added to light up button", () => {
-        let button = document.getElementById(game.currentGame);
+    test("should add correct class to light up the buttons", () => {
+        let button = document.getElementById(game.currentGame[0]);
         lightsOn(game.currentGame[0]);
         expect(button.classList).toContain("light");
     });
@@ -99,10 +105,14 @@ describe("gameplay works correctly", () => {
         showTurns();
         expect(game.turnNumber).toBe(0);
     });
-    test("should increment score if turn is correct", () => {
+    test("should increment the score if the turn is correct", () => {
         game.playerMoves.push(game.currentGame[0]);
         playerTurn();
         expect(game.score).toBe(1);
     });
+    test("should call alert if move in incorrect", () => {
+        game.playerMoves.push("wrong");
+        playerTurn();
+        expect(window.alert).toBeCalledWith("Wrong move!");
+    })
 });
-
