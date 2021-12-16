@@ -18,7 +18,7 @@ const showScore = () => (document.getElementById("score").innerText = game.score
 function addTurn() {
     playerMoves = [];
     game.currentGame.push(game.choices[(Math.floor(Math.random() * 4))]);
-    // showTurn();
+    showTurns();
 }
 
 function lightsOn(circ) {
@@ -28,10 +28,22 @@ function lightsOn(circ) {
     }, 400);
 };
 
+function showTurns() {
+    game.turnNumber = 0;
+    let turns = setInterval(() => {
+        lightsOn(game.currentGame[game.turnNumber]);
+        game.turnNumber ++;
+        if (game.turnNumber >= game.currentGame.length){
+            clearInterval(turns);
+        };
+    }, 800);
+};
+
 module.exports = {
     game,
     newGame,
     showScore,
     addTurn,
-    lightsOn
+    lightsOn,
+    showTurns
 };
