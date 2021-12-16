@@ -9,9 +9,10 @@ function newGame() {
     game.score = 0;
     game.currentGame = [];
     game.playerMoves = [];
+    showScore();
 };
 
-const showScore = () => (document.getElementById("score").innerText = 0);
+const showScore = () => (document.getElementById("score").innerText = game.score);
 
 module.exports = {
     game,
