@@ -10,12 +10,20 @@ function newGame() {
     game.currentGame = [];
     game.playerMoves = [];
     showScore();
+    addTurn();
 };
 
 const showScore = () => (document.getElementById("score").innerText = game.score);
+
+function addTurn() {
+    playerMoves = [];
+    game.currentGame.push(game.choices[(Math.floor(Math.random() * 4))]);
+    // showTurn();
+}
 
 module.exports = {
     game,
     newGame,
     showScore,
+    addTurn,
 };
