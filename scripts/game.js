@@ -19,7 +19,7 @@ function newGame() {
                 game.playerMoves.push(move);
                 playerTurn();
             });
-            circle.setAttributes("data-listener", "true");
+            circle.setAttribute("data-listener", "true");
         };
     };
     showScore();
