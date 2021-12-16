@@ -2,11 +2,7 @@
  * @jest-environment jsdom
  */
 
-const {
-    game,
-    newGame,
-    showScore
-} = require("../game");
+const {game} = require("../game");
 
 
 beforeAll(() => {
@@ -41,6 +37,6 @@ describe("new game function works correctly", () => {
         newGame();
     });
     test("game score should be set to 0", () => {
-        expect("score" in game).toEqual(0);
-    })
-})
+        expect(game.score).toEqual(0);
+    });
+});
