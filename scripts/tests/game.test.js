@@ -53,3 +53,21 @@ describe("new game function works correctly", () => {
         expect(document.getElementById("score").innerText).toEqual(0)
     })
 });
+
+describe("gameplay works correctly", () => {
+    beforeEach(() > {
+        game.score = 0;
+        game.currentGame = [];
+        game.playerMoveS = [];
+        addTurn();
+    });
+    afterEach(() => {
+        game.score = 0;
+        game.currentGame = [];
+        game.playerMoves = [];
+    });
+    test("addTurn adds new turn to game", () => {
+        addTurn();
+        expect(game.currentGame.length).toBe(2);
+    })
+});
