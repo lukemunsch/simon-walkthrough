@@ -62,6 +62,12 @@ describe("new game function works correctly", () => {
     test("score showing in html should reset to 0", () => {
         expect(document.getElementById("score").innerText).toEqual(0)
     })
+    test("expect data-listener to be true", () => {
+        const elems = document.getElementsByClassName("circle");
+        for (el of elems) {
+            expect(el.getAttribute("data-listener")).toEqual("true");
+        }
+    })
 });
 
 describe("gameplay works correctly", () => {
