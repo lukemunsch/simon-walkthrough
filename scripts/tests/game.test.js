@@ -12,6 +12,8 @@ const {
     playerTurn
 } = require("../game");
 
+jest.spyOn(window, "alert").mockImplementation(() => { })
+
 
 beforeAll(() => {
     let fs = require("fs");

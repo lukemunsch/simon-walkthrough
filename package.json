@@ -1,7 +1,6 @@
 {
   "name": "simon-walkthrough",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "jest"
@@ -18,5 +17,6 @@
   "homepage": "https://github.com/lukemunsch/simon-walkthrough#readme",
   "devDependencies": {
     "jest": "^27.4.5"
-  }
+  },
+  "description": ""
 }
